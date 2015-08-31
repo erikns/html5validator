@@ -19,9 +19,9 @@ class Validator:
         with open(self.file) as file_content:
             content = file_content.read()
         r = requests.post(Validator.rest_url, 
-            params={'out': 'gnu'}, 
-            headers={'Content-Type': 'text/html; charset=UTF-8'},
-            data=content)
+                params={'out': 'gnu'}, 
+                headers={'Content-Type': 'text/html; charset=UTF-8'},
+                data=content)
         return r.text
 
 
