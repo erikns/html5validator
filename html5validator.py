@@ -4,6 +4,9 @@ import sys
 import requests
 
 
+VERSION = '0.1'
+
+
 class Validator:
     rest_url = 'https://validator.nu/'
 
@@ -26,8 +29,14 @@ def main(argv):
         print 'Invalid number of arguments'
         usage()
         exit(1)
+
     v = Validator(argv[0])
     print v.validate()
+
+
+def version():
+    print 'html5validator v' + VERSION
+    usage()
 
 
 def usage():
