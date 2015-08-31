@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
 import sys
 import requests
@@ -36,6 +37,7 @@ def main(argv):
 
 def version():
     print 'html5validator v' + VERSION
+    print 'Copyright (C) Erik Sørensen, 2015. All rights reserved.'
     usage()
 
 
