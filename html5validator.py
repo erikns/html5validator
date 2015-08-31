@@ -31,8 +31,14 @@ def main(argv):
         usage()
         exit(1)
 
+    if argv[0] == '-v':
+        version()
+        exit(0)
+
     v = Validator(argv[0])
+    print 'Validating ' + argv[0] + '...'
     print v.validate()
+    print 'Validation complete'
 
 
 def version():
