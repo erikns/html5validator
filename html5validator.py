@@ -49,13 +49,31 @@ class ValidationOutputFormatter:
         # print validation_json
 
         messages = validation_json['messages']
+
+        num_info = 0
+        num_warning = 0
+        num_error = 0
+        out_lines = []
+
         for message in messages:
             if message['type'] == 'info':
-                print bcolors.OKGREEN + 'I ' + message['message'] + bcolors.ENDC
+                out_lines.append(self.__wrap_color(bcolors.OKGREEN, 'I ' + message['message']))
+                num_info += 1
             elif message['type'] == 'warning':
-                print bcolors.WARNING + 'W' + message['message'] + bcolors.ENDC
+                out_lines.append(self.__wrap_color(bcolors.WARNING, 'W' + message['message']))
+                num_warning += 1
             elif message['type'] == 'error':
-                print bcolors.FAIL + 'E ' + message['message'] + bcolors.ENDC
+                out_lines.append(self.__wrap_color(bcolors.FAIL, 'E ' + message['message']))
+                num_error += 1
+
+        print ''
+        print 'Result: ' + str(num_error) + ' errors, ' + str(num_warning) + ' warnings, ' + str(num_info) + ' info'
+        print 'Issues:'
+        for line in out_lines:
+            print line
+
+    def __wrap_color(self, color, message):
+        return (color + message + bcolors.ENDC)
 
     def output_stdout_old(self, validation):
         if len(validation) > 0:
