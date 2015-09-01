@@ -58,6 +58,7 @@ def do_validation(input_file):
     print 'Validating ' + input_file + '...'
     validation = v.validate()
     if len(validation) > 0:
+        print bcolors.FAIL + 'Found something:' + bcolors.ENDC
         print validation
     else:
         print bcolors.OKGREEN + 'No errors or warnings found' + bcolors.ENDC
