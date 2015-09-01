@@ -51,11 +51,11 @@ class ValidationOutputFormatter:
         messages = validation_json['messages']
         for message in messages:
             if message['type'] == 'info':
-                print bcolors.OKGREEN + 'Info:\t' + message['message'] + bcolors.ENDC
+                print bcolors.OKGREEN + 'I ' + message['message'] + bcolors.ENDC
             elif message['type'] == 'warning':
-                print bcolors.WARNING + 'Warning:\t' + message['message'] + bcolors.ENDC
+                print bcolors.WARNING + 'W' + message['message'] + bcolors.ENDC
             elif message['type'] == 'error':
-                print bcolors.FAIL + 'Error:\t' + message['message'] + bcolors.ENDC
+                print bcolors.FAIL + 'E ' + message['message'] + bcolors.ENDC
 
     def output_stdout_old(self, validation):
         if len(validation) > 0:
