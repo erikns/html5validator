@@ -6,7 +6,7 @@ import requests
 import json
 
 
-VERSION = '1.1'
+VERSION = '1.1.1'
 
 
 class bcolors:
