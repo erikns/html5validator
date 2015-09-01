@@ -5,7 +5,7 @@ import sys
 import requests
 
 
-VERSION = '0.1'
+VERSION = '1.0'
 
 
 class bcolors:
