@@ -102,6 +102,8 @@ class ValidationOutputFormatter:
 
 
 def main(argv):
+    notice()
+
     if len(argv) != 1:
         print 'Invalid number of arguments'
         usage()
@@ -125,8 +127,17 @@ def do_validation(input_file):
 
 def version():
     print 'html5validator v' + VERSION
-    print 'Copyright (C) Erik Sørensen, 2015. All rights reserved.'
-    usage()
+    print 'Copyright (C) Erik Sørensen, 2015'
+    notice()
+
+
+def notice():
+    print ''
+    print 'This program is distributed in the hope that it will be useful,'
+    print 'but WITHOUT ANY WARRANTY; without even the implied warranty of'
+    print 'MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the'
+    print 'GNU General Public License for more details.'
+    print ''
 
 
 def usage():
