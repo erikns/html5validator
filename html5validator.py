@@ -37,7 +37,9 @@ def main(argv):
 
     v = Validator(argv[0])
     print 'Validating ' + argv[0] + '...'
-    print v.validate()
+    validation = v.validate()
+    if len(validation) > 0:
+        print validation
     print 'Validation complete'
 
 
