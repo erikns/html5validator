@@ -23,7 +23,7 @@ import requests
 import json
 
 
-VERSION = '1.1.1'
+VERSION = '1.2'
 
 
 class bcolors:
@@ -47,8 +47,8 @@ class Validator:
         content = ''
         with open(self.file) as file_content:
             content = file_content.read()
-        r = requests.post(Validator.rest_url, 
-                params={'out': 'json'}, 
+        r = requests.post(Validator.rest_url,
+                params={'out': 'json'},
                 headers={'Content-Type': 'text/html; charset=UTF-8'},
                 data=content)
         if r.status_code == 200:
