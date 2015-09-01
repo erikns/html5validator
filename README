@@ -6,21 +6,4 @@ Copyright (C) Erik Sørensen, 2015.
 The software is licensed under the GNU General Public License v3 (GPL), for
 details, see LICENSE file.
 
-INSTALLATION
----------------------
-
-OPTION 1:
-
-Run the install.sh script (bash). It will place the python file in /bin under
-the current users home folder without the .py extension
-
-OPTION 2:
-
-Place the file anywhere you like manually :)
-
-NOTE:
-
-Make shure the folder where you place the file is in your PATH. Then you can
-invoke the utility from anywhere by issuing html5validator [file] in your
-command shell.
 
