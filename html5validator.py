@@ -33,7 +33,10 @@ class Validator:
                 params={'out': 'gnu'}, 
                 headers={'Content-Type': 'text/html; charset=UTF-8'},
                 data=content)
-        return r.text
+        if r.status_code == 200:
+            return r.text
+        else:
+            return ''
 
 
 def main(argv):
