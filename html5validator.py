@@ -73,18 +73,32 @@ class ValidationOutputFormatter:
         out_lines = []
 
         for message in messages:
+            print 'Debug:'
+            print message
             if message['type'] == 'info':
-                out_lines.append(self.__wrap_color(bcolors.OKGREEN, 'I ' + message['message']))
+                out_lines.append(self.__wrap_color(bcolors.OKGREEN, 'I ' + \
+                        '[   ] '  + message['message']))
                 num_info += 1
             elif message['type'] == 'warning':
-                out_lines.append(self.__wrap_color(bcolors.WARNING, 'W' + message['message']))
+                out_lines.append(self.__wrap_color(bcolors.WARNING, 'W' +  \
+                        '[' + self.__extract_key(message, 'firstLine') + ',' + \
+                        self.__extract_key(message, 'lastLine')  + '] ' + \
+                        message['message']))
                 num_warning += 1
             elif message['type'] == 'error':
-                out_lines.append(self.__wrap_color(bcolors.FAIL, 'E ' + message['message']))
+                out_lines.append(self.__wrap_color(bcolors.FAIL, 'E ' + \
+                        '[' + self.__extract_key(message, 'firstLine') + \
+                        ',' + self.__extract_key(message, 'lastLine') + \
+                        '] ' + \
+                        message['message']))
                 num_error += 1
 
         print ''
+        print 'Issues:'
+        for line in out_lines:
+            print line
 
+        print ''
         if (num_error == 0) and (num_warning == 0):
             print self.__wrap_color(bcolors.OKGREEN, 'Validation OK')
         elif (num_error == 0) and (num_warning > 0):
@@ -92,13 +106,17 @@ class ValidationOutputFormatter:
         else:
             print self.__wrap_color(bcolors.FAIL, 'Validation FAILED')
 
-        print str(num_error) + ' errors, ' + str(num_warning) + ' warnings, ' + str(num_info) + ' info'
-        print 'Issues:'
-        for line in out_lines:
-            print line
+        print str(num_error) + ' errors, ' + str(num_warning) \
+                + ' warnings, ' + str(num_info) + ' info'
 
     def __wrap_color(self, color, message):
         return (color + message + bcolors.ENDC)
+
+    def __extract_key(self, dictionary, key):
+        try:
+            return str(dictionary[key])
+        except KeyError:
+            return ''
 
 
 def main(argv):
