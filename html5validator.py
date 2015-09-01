@@ -3,6 +3,7 @@
 
 import sys
 import requests
+import json
 
 
 VERSION = '1.0.1'
@@ -30,13 +31,57 @@ class Validator:
         with open(self.file) as file_content:
             content = file_content.read()
         r = requests.post(Validator.rest_url, 
-                params={'out': 'gnu'}, 
+                params={'out': 'json'}, 
                 headers={'Content-Type': 'text/html; charset=UTF-8'},
                 data=content)
         if r.status_code == 200:
             return r.text
         else:
             return ''
+
+
+class ValidationOutputFormatter:
+    def __init__(self):
+        pass
+
+    def output_stdout(self, validation):
+        validation_json = json.loads(validation)
+        # print validation_json
+
+        messages = validation_json['messages']
+
+        num_info = 0
+        num_warning = 0
+        num_error = 0
+        out_lines = []
+
+        for message in messages:
+            if message['type'] == 'info':
+                out_lines.append(self.__wrap_color(bcolors.OKGREEN, 'I ' + message['message']))
+                num_info += 1
+            elif message['type'] == 'warning':
+                out_lines.append(self.__wrap_color(bcolors.WARNING, 'W' + message['message']))
+                num_warning += 1
+            elif message['type'] == 'error':
+                out_lines.append(self.__wrap_color(bcolors.FAIL, 'E ' + message['message']))
+                num_error += 1
+
+        print ''
+
+        if (num_error == 0) and (num_warning == 0):
+            print self.__wrap_color(bcolors.OKGREEN, 'Validation OK')
+        elif (num_error == 0) and (num_warning > 0):
+            print self.__wrap_color(bcolors.WARNING, 'Validation OK with warnings')
+        else:
+            print self.__wrap_color(bcolors.FAIL, 'Validation FAILED')
+
+        print str(num_error) + ' errors, ' + str(num_warning) + ' warnings, ' + str(num_info) + ' info'
+        print 'Issues:'
+        for line in out_lines:
+            print line
+
+    def __wrap_color(self, color, message):
+        return (color + message + bcolors.ENDC)
 
 
 def main(argv):
@@ -57,12 +102,8 @@ def do_validation(input_file):
     v = Validator(input_file)
     print 'Validating ' + input_file + '...'
     validation = v.validate()
-    if len(validation) > 0:
-        print bcolors.FAIL + 'Found something:' + bcolors.ENDC
-        print validation
-    else:
-        print bcolors.OKGREEN + 'No errors or warnings found' + bcolors.ENDC
-    print 'Validation complete'
+    output = ValidationOutputFormatter()
+    output.output_stdout(validation)
 
 
 def version():
