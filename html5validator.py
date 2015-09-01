@@ -35,8 +35,10 @@ def main(argv):
         version()
         exit(0)
 
-    v = Validator(argv[0])
-    print 'Validating ' + argv[0] + '...'
+    input_file = argv[len(argv) - 1] # last element is input file
+
+    v = Validator(input_file)
+    print 'Validating ' + input_file + '...'
     validation = v.validate()
     if len(validation) > 0:
         print validation
