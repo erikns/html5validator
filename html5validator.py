@@ -105,7 +105,7 @@ def main(argv):
     notice()
 
     if len(argv) != 1:
-        print 'Invalid number of arguments'
+        print bcolors.WARNING + 'Invalid number of arguments' + bcolors.ENDC
         usage()
         exit(1)
 
