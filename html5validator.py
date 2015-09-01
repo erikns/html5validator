@@ -23,7 +23,7 @@ import requests
 import json
 
 
-VERSION = '1.2'
+VERSION = '1.2.1'
 
 
 class bcolors:
