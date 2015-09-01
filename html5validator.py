@@ -67,21 +67,21 @@ class ValidationOutputFormatter:
                 num_error += 1
 
         print ''
-        print 'Result: ' + str(num_error) + ' errors, ' + str(num_warning) + ' warnings, ' + str(num_info) + ' info'
+
+        if (num_error == 0) and (num_warning == 0):
+            print self.__wrap_color(bcolors.OKGREEN, 'Validation OK')
+        elif (num_error == 0) and (num_warning > 0):
+            print self.__wrap_color(bcolors.WARNING, 'Validation OK with warnings')
+        else:
+            print self.__wrap_color(bcolors.FAIL, 'Validation FAILED')
+
+        print str(num_error) + ' errors, ' + str(num_warning) + ' warnings, ' + str(num_info) + ' info'
         print 'Issues:'
         for line in out_lines:
             print line
 
     def __wrap_color(self, color, message):
         return (color + message + bcolors.ENDC)
-
-    def output_stdout_old(self, validation):
-        if len(validation) > 0:
-            print bcolors.FAIL + 'Found something:' + bcolors.ENDC
-            print validation
-        else:
-            print bcolors.OKGREEN + 'No errors or warnings found' + bcolors.ENDC
-        print 'Validation complete'
 
 
 def main(argv):
@@ -103,7 +103,6 @@ def do_validation(input_file):
     print 'Validating ' + input_file + '...'
     validation = v.validate()
     output = ValidationOutputFormatter()
-    # output.output_stdout_old(validation)
     output.output_stdout(validation)
 
 
