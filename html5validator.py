@@ -73,8 +73,6 @@ class ValidationOutputFormatter:
         out_lines = []
 
         for message in messages:
-            print 'Debug:'
-            print message
             if message['type'] == 'info':
                 out_lines.append(self.__wrap_color(bcolors.OKGREEN, 'I ' + \
                         '[   ] '  + message['message']))
