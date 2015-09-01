@@ -50,7 +50,10 @@ def main(argv):
         exit(0)
 
     input_file = argv[len(argv) - 1] # last element is input file
+    do_validation(input_file)
 
+
+def do_validation(input_file):
     v = Validator(input_file)
     print 'Validating ' + input_file + '...'
     validation = v.validate()
