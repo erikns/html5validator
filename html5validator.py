@@ -22,11 +22,10 @@ import sys
 import requests
 import json
 
-
 VERSION = '1.2.2'
 
 
-class bcolors:
+class BColors:
     HEADER = '\033[95m'
     OKBLUE = '\033[94m'
     OKGREEN = '\033[92m'
@@ -40,17 +39,17 @@ class bcolors:
 class Validator:
     rest_url = 'https://validator.nu/'
 
-    def __init__(self, file):
-        self.file = file
+    def __init__(self, file_name):
+        self.file_name = file_name
 
     def validate(self):
-        content = ''
-        with open(self.file) as file_content:
+        # content = ''
+        with open(self.file_name) as file_content:
             content = file_content.read()
         r = requests.post(Validator.rest_url,
-                params={'out': 'json'},
-                headers={'Content-Type': 'text/html; charset=UTF-8'},
-                data=content)
+                          params={'out': 'json'},
+                          headers={'Content-Type': 'text/html; charset=UTF-8'},
+                          data=content)
         if r.status_code == 200:
             return r.text
         else:
@@ -74,21 +73,21 @@ class ValidationOutputFormatter:
 
         for message in messages:
             if message['type'] == 'info':
-                out_lines.append(self.__wrap_color(bcolors.OKGREEN, 'I ' + \
-                        '[   ] '  + message['message']))
+                out_lines.append(self.__wrap_color(BColors.OKGREEN, 'I ' +
+                                                   '[   ] ' + message['message']))
                 num_info += 1
             elif message['type'] == 'warning':
-                out_lines.append(self.__wrap_color(bcolors.WARNING, 'W' +  \
-                        '[' + self.__extract_key(message, 'firstLine') + ',' + \
-                        self.__extract_key(message, 'lastLine')  + '] ' + \
-                        message['message']))
+                out_lines.append(self.__wrap_color(BColors.WARNING, 'W' +
+                                                   '[' + self.__extract_key(message, 'firstLine') + ',' +
+                                                   self.__extract_key(message, 'lastLine') + '] ' +
+                                                   message['message']))
                 num_warning += 1
             elif message['type'] == 'error':
-                out_lines.append(self.__wrap_color(bcolors.FAIL, 'E ' + \
-                        '[' + self.__extract_key(message, 'firstLine') + \
-                        ',' + self.__extract_key(message, 'lastLine') + \
-                        '] ' + \
-                        message['message']))
+                out_lines.append(self.__wrap_color(BColors.FAIL, 'E ' +
+                                                   '[' + self.__extract_key(message, 'firstLine') +
+                                                   ',' + self.__extract_key(message, 'lastLine') +
+                                                   '] ' +
+                                                   message['message']))
                 num_error += 1
 
         print ''
@@ -98,19 +97,20 @@ class ValidationOutputFormatter:
 
         print ''
         if (num_error == 0) and (num_warning == 0):
-            print self.__wrap_color(bcolors.OKGREEN, 'Validation OK')
+            print self.__wrap_color(BColors.OKGREEN, 'Validation OK')
         elif (num_error == 0) and (num_warning > 0):
-            print self.__wrap_color(bcolors.WARNING, 'Validation OK with warnings')
+            print self.__wrap_color(BColors.WARNING, 'Validation OK with warnings')
         else:
-            print self.__wrap_color(bcolors.FAIL, 'Validation FAILED')
+            print self.__wrap_color(BColors.FAIL, 'Validation FAILED')
 
-        print str(num_error) + ' errors, ' + str(num_warning) \
-                + ' warnings, ' + str(num_info) + ' info'
+        print str(num_error) + ' errors, ' + str(num_warning) + ' warnings, ' + str(num_info) + ' info'
 
-    def __wrap_color(self, color, message):
-        return (color + message + bcolors.ENDC)
+    @staticmethod
+    def __wrap_color(color, message):
+        return color + message + BColors.ENDC
 
-    def __extract_key(self, dictionary, key):
+    @staticmethod
+    def __extract_key(dictionary, key):
         try:
             return str(dictionary[key])
         except KeyError:
@@ -119,7 +119,7 @@ class ValidationOutputFormatter:
 
 def main(argv):
     if len(argv) != 1:
-        print bcolors.WARNING + 'Invalid number of arguments' + bcolors.ENDC
+        print BColors.WARNING + 'Invalid number of arguments' + BColors.ENDC
         usage()
         exit(1)
 
@@ -129,7 +129,7 @@ def main(argv):
 
     notice()
 
-    input_file = argv[len(argv) - 1] # last element is input file
+    input_file = argv[len(argv) - 1]  # last element is input file
     do_validation(input_file)
 
 
@@ -160,5 +160,5 @@ def usage():
     print 'Usage: html5validator.py file'
 
 
-if (__name__ == '__main__'):
+if __name__ == '__main__':
     main(sys.argv[1:])
