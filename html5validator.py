@@ -118,7 +118,7 @@ class ValidationOutputFormatter:
 
 
 def main(argv):
-    if len(argv) != 1:
+    if len(argv) < 1:
         print BColors.WARNING + 'Invalid number of arguments' + BColors.ENDC
         usage()
         exit(1)
@@ -129,8 +129,9 @@ def main(argv):
 
     notice()
 
-    input_file = argv[len(argv) - 1]  # last element is input file
-    do_validation(input_file)
+    input_files = argv
+    for input_file in input_files:
+        do_validation(input_file)
 
 
 def do_validation(input_file):
