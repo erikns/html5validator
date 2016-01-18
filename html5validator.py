@@ -43,7 +43,7 @@ class Validator:
         self.file_name = file_name
 
     def validate(self):
-        # content = ''
+        # TODO: add better error message for invalid file name
         with open(self.file_name) as file_content:
             content = file_content.read()
         r = requests.post(Validator.rest_url,
