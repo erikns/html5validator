@@ -127,7 +127,7 @@ def main(argv):
         version()
         exit(0)
 
-    notice()
+    # notice()
 
     input_files = argv
     for input_file in input_files:
