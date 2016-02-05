@@ -21,6 +21,7 @@
 import sys
 import requests
 import json
+import os.path
 
 VERSION = '1.2.2'
 
@@ -43,7 +44,6 @@ class Validator:
         self.file_name = file_name
 
     def validate(self):
-        # TODO: add better error message for invalid file name
         with open(self.file_name) as file_content:
             content = file_content.read()
         r = requests.post(Validator.rest_url,
@@ -131,15 +131,22 @@ def main(argv):
 
     input_files = argv
     for input_file in input_files:
-        do_validation(input_file)
+       ok = do_validation(input_file)
+       # abort when a validation failes because of a file error, etc.
+       if not ok:
+           exit(1)
 
 
 def do_validation(input_file):
+    if not os.path.exists(input_file):
+        print 'Error: File ' + input_file + ' does not exist'
+        return False;
     v = Validator(input_file)
     print 'Validating ' + input_file + '...'
     validation = v.validate()
     output = ValidationOutputFormatter()
     output.output_stdout(validation)
+    return True
 
 
 def version():
