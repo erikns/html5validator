@@ -10,6 +10,11 @@ Copyright (C) Erik Sørensen, 2015.
 Using html5validator is simple: (./)html5validator [one more files ...]
 Shell wildcard expansion will be handled.
 
+Example:
+```bash
+./html5validator testData/*.html
+```
+
 ### License
 
 The software is licensed under the [GNU General Public License v3
