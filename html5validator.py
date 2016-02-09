@@ -139,7 +139,8 @@ def main(argv):
 
 def do_validation(input_file):
     if not os.path.exists(input_file):
-        print 'Error: File ' + input_file + ' does not exist'
+        print BColors.WARNING + 'Error: File ' + input_file + ' does not exist' \
+                + BColors.ENDC
         return False;
     v = Validator(input_file)
     print 'Validating ' + input_file + '...'
