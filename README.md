@@ -12,7 +12,8 @@ Shell wildcard expansion will be handled.
 
 ### License
 
-The software is licensed under the GNU General Public License v3 (GPL), for
+The software is licensed under the [GNU General Public License v3
+(GPL)](LICENSE.md), for
 details, see LICENSE file.
 
 
