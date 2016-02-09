@@ -4,14 +4,10 @@ INSTALLATION
 html5validator depends on the 'requests' library. Make shure you install it
 before you attempt to run the tool.
 
-OPTION 1:
-
-Run the install.sh script (bash). It will place the python file in /bin under
-the current users home folder without the .py extension
-
-OPTION 2:
-
 Place the file anywhere you like manually :)
+
+The html5validator.py contains a hashbang line, so executing it directly
+from yout command shell should run it correctly.
 
 NOTE:
 
