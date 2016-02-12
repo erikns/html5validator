@@ -132,7 +132,7 @@ def main(argv):
     input_files = argv
     for input_file in input_files:
        ok = do_validation(input_file)
-       # abort when a validation failes because of a file error, etc.
+       # abort when a validation fails because of a file error, etc.
        if not ok:
            exit(1)
 
