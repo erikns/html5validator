@@ -7,7 +7,7 @@ before you attempt to run the tool.
 Place the file anywhere you like manually :)
 
 The html5validator contains a hashbang line, so executing it directly
-from yout command shell should run it correctly.
+from your command shell should run it correctly.
 
 NOTE:
 
