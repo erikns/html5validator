@@ -166,7 +166,7 @@ def do_validation(input_file):
 
 def version():
     print 'html5validator v' + VERSION
-    print 'Copyright (C) Erik Sørensen, 2015'
+    print 'Copyright (C) Erik Sørensen, 2016'
     notice()
 
 
