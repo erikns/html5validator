@@ -22,6 +22,7 @@ import sys
 import requests
 import json
 import os.path
+from requests.exceptions import ConnectionError
 
 VERSION = '1.2.2'
 
@@ -44,17 +45,23 @@ class Validator:
         self.file_name = file_name
 
     def validate(self):
-        with open(self.file_name) as file_content:
-            content = file_content.read()
-        r = requests.post(Validator.rest_url,
-                          params={'out': 'json'},
-                          headers={'Content-Type': 'text/html; charset=UTF-8'},
-                          data=content)
-        if r.status_code == 200:
-            return r.text
-        else:
-            return ''
-
+        try:
+            with open(self.file_name) as file_content:
+                content = file_content.read()
+            r = requests.post(Validator.rest_url,
+                            params={'out': 'json'},
+                            headers={'Content-Type': 'text/html; charset=UTF-8'},
+                            data=content)
+            if r.status_code == 200:
+                return r.text, ''   # TODO: maybe return something else to
+                                    # indicate no error
+            else:
+                msg = 'Error posting the validation request. HTTP Status ' \
+                    + r.status_code
+                return '', msg
+        except ConnectionError:
+            msg = 'Error connecting to the validation endpoint'
+            return '', msg
 
 class ValidationOutputFormatter:
     def __init__(self):
@@ -141,10 +148,14 @@ def do_validation(input_file):
     if not os.path.exists(input_file):
         print BColors.WARNING + 'Error: File ' + input_file + ' does not exist' \
                 + BColors.ENDC
-        return False;
+        return False
     v = Validator(input_file)
     print 'Validating ' + input_file + '...'
-    validation = v.validate()
+    validation, msg = v.validate()
+    if msg != '':
+        # error occurred
+        print BColors.FAIL + msg + BColors.ENDC
+        return False
     output = ValidationOutputFormatter()
     output.output_stdout(validation)
     return True
