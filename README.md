@@ -7,7 +7,7 @@ Copyright (C) Erik Sørensen, 2015.
 
 ### Usage
 
-Using html5validator is simple: (./)html5validator [one more files ...]
+Using html5validator is simple: (./)html5validator [one or more files ...]
 Shell wildcard expansion will be handled.
 
 Example:
