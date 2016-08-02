@@ -98,9 +98,12 @@ class ValidationOutputFormatter:
                 num_error += 1
 
         print ''
-        print 'Issues:'
-        for line in out_lines:
-            print line
+        if num_error > 0 or num_warning > 0 or num_info > 0:
+            print 'Issues:'
+            for line in out_lines:
+                print line
+        else:
+            print 'No issues'
 
         print ''
         if (num_error == 0) and (num_warning == 0):
